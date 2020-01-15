@@ -27,3 +27,5 @@ curl -d {"customer":"Milk and Wool Trading Ltd","order":{"milk":10,"wool": 3 }} 
 
 <h4>4) As a farmer, I'd like to see history of (fulfilled) orders</h4>
 curl -v http://localhost:8080/farmshop/admin/orders
+
+Note: default port 8080 should be available. 
