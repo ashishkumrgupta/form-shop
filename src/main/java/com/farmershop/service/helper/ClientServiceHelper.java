@@ -17,15 +17,16 @@ import com.farmershop.v1.controller.requests.OrderRequest;
 @Component
 public class ClientServiceHelper {
 
+	/**
+	 * Random order Id to start with.
+	 */
 	private long orderId = 32176L;
 
 	/**
 	 * To find if the ordered quantity is available in the stock.
 	 * 
-	 * @param stock
-	 *            {@link FlockDB}
-	 * @param orderRequest
-	 *            {@link OrderRequest}
+	 * @param stock        {@link FlockDB}
+	 * @param orderRequest {@link OrderRequest}
 	 * @return true is ordered quantity is available.
 	 */
 	public boolean checkStockAvailability(FlockDB stock, OrderRequest orderRequest) {
@@ -41,10 +42,8 @@ public class ClientServiceHelper {
 	/**
 	 * To place an order.
 	 * 
-	 * @param stock
-	 *            {@link FlockDB}
-	 * @param orderRequest
-	 *            {@link OrderRequest}
+	 * @param stock        {@link FlockDB}
+	 * @param orderRequest {@link OrderRequest}
 	 * @return orderid of the order.
 	 */
 	public String placeOrder(FlockDB stock, OrderRequest orderRequest) {
@@ -59,12 +58,9 @@ public class ClientServiceHelper {
 	/**
 	 * To save a placed order.
 	 * 
-	 * @param orderId
-	 *            orderId of the Order.
-	 * @param orderDB
-	 *            {@link OrderDB}
-	 * @param orderRequest
-	 *            {@link OrderRequest}
+	 * @param orderId      orderId of the Order.
+	 * @param orderDB      {@link OrderDB}
+	 * @param orderRequest {@link OrderRequest}
 	 */
 	public void saveOrder(String orderId, OrderRequest orderRequest, OrderDB orderDB) {
 		Order order = new Order(orderRequest.getOrder().getMilk(), orderRequest.getOrder().getWool());

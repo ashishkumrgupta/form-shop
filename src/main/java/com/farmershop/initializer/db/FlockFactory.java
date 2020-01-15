@@ -24,6 +24,7 @@ public class FlockFactory {
 				result = new Sheep.Builder().build();
 				setTypeAndSex(result, flockType, sex);
 			} else {
+				LOGGER.error("Unknown sex type recieved in the input file.", flockType);
 				result = null;
 			}
 		}
@@ -36,6 +37,7 @@ public class FlockFactory {
 				result = new Goat.Builder().build();
 				setTypeAndSex(result, flockType, sex);
 			} else {
+				LOGGER.error("Unknown sex type recieved in the input file.", flockType);
 				result = null;
 			}
 		}
@@ -52,12 +54,9 @@ public class FlockFactory {
 	/**
 	 * Utility class to set flock type and sex
 	 * 
-	 * @param flock
-	 *            {@link Flock}
-	 * @param type
-	 *            flock type
-	 * @param sex
-	 *            fock sex
+	 * @param flock {@link Flock}
+	 * @param type  flock type
+	 * @param sex   flock sex
 	 * @return {@link Flock}
 	 */
 	private static Flock setTypeAndSex(Flock flock, String type, String sex) {
