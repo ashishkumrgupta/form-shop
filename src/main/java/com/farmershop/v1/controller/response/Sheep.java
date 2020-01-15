@@ -1,6 +1,7 @@
 package com.farmershop.v1.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,7 @@ public class Sheep {
 
 	private String name;
 	private String sex;
+	@JsonProperty("wool")
 	private double woolQuanity;
 	private String type;
 	@JsonIgnore
