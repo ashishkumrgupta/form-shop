@@ -1,7 +1,7 @@
 package com.farmershop.initializer;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +11,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -44,7 +47,8 @@ public class FarmShopDataInitializer implements CommandLineRunner {
 	private static final String NAME = "name";
 	private static final String WOOL = "wool";
 
-	private static final String PATHTOFLOCK = "src/main/resources/flock.xml";
+	@Autowired
+	ResourceLoader resourceLoader;
 
 	private static FlockDB flockDB;
 	private static OrderDB orderDB;
@@ -59,16 +63,19 @@ public class FarmShopDataInitializer implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		Resource resource = resourceLoader.getResource("classpath:flock.xml");
+		InputStream stream = resource.getInputStream();
 		LOGGER.info("Loading of input data started.");
-		parseFlockXMLAndPopulateDBs();
+		parseFlockXMLAndPopulateDBs(stream);
 		LOGGER.info("Loading of input data done.");
 	}
 
-	private static void parseFlockXMLAndPopulateDBs() throws ParserConfigurationException, SAXException, IOException {
+	private static void parseFlockXMLAndPopulateDBs(InputStream stream)
+			throws ParserConfigurationException, SAXException, IOException {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document document = builder.parse(new File(PATHTOFLOCK));
+		Document document = builder.parse(stream);
 
 		NodeList nListOfSheep = document.getElementsByTagName(FlockType.SHEEP.name().toLowerCase());
 		LOGGER.info("total Sheeps: {}", nListOfSheep.getLength());
@@ -193,6 +200,5 @@ public class FarmShopDataInitializer implements CommandLineRunner {
 		double avaialbleSheapWool = sheeps.stream().mapToDouble(sheep -> sheep.getWoolQuanity()).sum();
 
 		return avaialbleLambWool + avaialbleSheapWool;
-
 	}
 }
